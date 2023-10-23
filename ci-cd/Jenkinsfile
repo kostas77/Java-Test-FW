@@ -106,19 +106,19 @@ pipeline {
 //        }
 
 
-        stage('Test') {
-            steps {
-                script {
-                    echo 'Testing...'
-                    sh 'docker --version'
-                    // docker.build([service])
-
-                    // docker.test(
-                    //     [(service): [test_command: 'yarn resolve-secrets:local && yarn build && xvfb-run --auto-servernum yarn workspace e2e run:smoke-tests']]
-                    // )
-                }
-            }
-        }
+//        stage('Test') {
+//            steps {
+//                script {
+//                    echo 'Testing...'
+//                    sh 'docker --version'
+//                    // docker.build([service])
+//
+//                    // docker.test(
+//                    //     [(service): [test_command: 'yarn resolve-secrets:local && yarn build && xvfb-run --auto-servernum yarn workspace e2e run:smoke-tests']]
+//                    // )
+//                }
+//            }
+//        }
 
         stage('Docker Lighthouse CI') {
             steps {
