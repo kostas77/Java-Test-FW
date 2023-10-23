@@ -1,0 +1,133 @@
+@Library("jenkins-shared-library") _
+
+pipeline {
+
+    agent {
+        label "centos_slave"
+    }
+
+    environment {
+        build_stamp = new Date().format("yyyyMMdd-HHmmss")
+        ci_env = "${BRANCH_NAME}"
+        region = "eu-west-1"
+        // GH_TOKEN = credentials('lhci-github-token')
+        ARTIFACTORY_URL          = 'docker-ecom-ecomplatform-local.bts.artifactory.tio.systems'
+//        PIPELINE_ID              = getPipelineID()
+        COMPOSE_DOCKER_CLI_BUILD = 1
+        DOCKER_BUILDKIT          = 1
+        // DOCKER_CREDENTIALS = 'docker-hub-credentials'
+        // DOCKER_IMAGE = 'myusername/myimage'
+    }
+
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 100, unit: 'MINUTES')
+        timestamps()
+        ansiColor('xterm')
+    }
+
+    tools {
+        nodejs 'NodeJS_16'
+    }
+
+    stages {
+
+        stage('Docker setup') {
+            steps {
+                script {
+                    echo 'Docker setup...'
+//                    docker.login()
+                }
+            }
+        }
+
+//        stage('SonarQube scan') {
+//            steps {
+//                script {
+//                    try {
+//                        if (env.BRANCH_NAME in ["main"]) {
+//                            echo 'Start SonarQube Scanning...'
+//                            def scannerHome = tool 'sonarQube-scanner';
+//                            withSonarQubeEnv('sonarQube-regional-server') {// If you have configured more than one global server connection, you can specify its name
+////                             sh "${env.SONAR_HOST_URL}"
+////                             sh "echo env"
+//                            sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=./sonar-project.properties"
+////                             sh "${scannerHome}/bin/sonar-scanner"
+//                            }
+//                        } else {
+//                            echo "No Sonarqube Scans required ${env.BRANCH_NAME}, skipping."
+//                        }
+//                    } catch (err) {
+//                        echo err.getMessage()
+//                    }
+//                }
+//            }
+//        }
+
+//        stage('Setup Google Chrome') {
+//            steps {
+//                script {
+//                    // sh '''
+//                    //     sudo sh -c 'echo -e "[google-chrome]\nname=google-chrome\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/$basearch\nenabled=1\ngpgcheck=1\ngpgkey=https://dl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome.repo'
+//                    // '''
+//                    // sh 'sudo yum install -y google-chrome-stable'
+//                    sh 'sudo yum install -y liberation-fonts --disablerepo=google-chrome'
+//                    sh 'sudo yum install -y libxkbcommon --disablerepo=google-chrome'
+//                    sh 'sudo yum install -y xdg-utils --disablerepo=google-chrome'
+//                    sh 'sudo yum install -y libXcomposite --disablerepo=google-chrome'
+//                    sh 'sudo yum install -y libXdamage --disablerepo=google-chrome'
+//                    sh 'sudo yum install -y libXrandr --disablerepo=google-chrome'
+//                    sh 'sudo yum install -y atk --disablerepo=google-chrome'
+//                    sh 'sudo yum install -y at-spi2-atk --disablerepo=google-chrome'
+//                    sh 'sudo yum install -y cairo --disablerepo=google-chrome'
+//                    sh '''
+//                        wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+//                        sudo yum localinstall -y ./google-chrome-stable_current_x86_64.rpm
+//                    '''
+//                }
+//            }
+//        }
+
+//        stage('Lighthouse CI scan') {
+//            steps {
+//                script {
+//                    try {
+//                        //if (env.BRANCH_NAME in ["dev", "uat", "staging"]) {
+//                            script {
+//                                sh 'npm install -g @lhci/cli@0.8.x'
+//                                // sh 'lhci autorun --collect.url=https://www.us.elsevierhealth.com'
+//                                sh 'lhci autorun'
+//                                // sh 'LHCI_GITHUB_APP_TOKEN=$GH_TOKEN lhci autorun'
+//                            }
+//                        //}
+//                    } catch (err) {
+//                        echo err.getMessage()
+//                    }
+//                }
+//            }
+//        }
+
+        stage('Smoke E2E Test') {
+            steps {
+                script {
+                    def service   = 'e2e'
+                    echo 'Building...'
+                    // docker.build([service])
+
+                    echo 'Running Smoke E2E Tests...'
+                    // docker.test(
+                    //     [(service): [test_command: 'yarn resolve-secrets:local && yarn build && xvfb-run --auto-servernum yarn workspace e2e run:smoke-tests']]
+                    // )
+                }
+            }
+        }
+
+
+    }
+
+//    post {
+//        always {
+//            sh("git clean -dfx")
+//        }
+//    }
+}

@@ -9,4 +9,4 @@
         ./yy:----+o `.sy+----/s :s/...+o. `.+ys-----o+      oy.      `-yy:` `.+ys:---:o+ `-yy-`  .oy+.`
        `..........` ..........`  .-:--.   `..........`      `-       ...... `..........` ......    ..-`
 
-                                Submissions Systems UI Testing Framework
+                                Regional eCommerce UI Testing Framework

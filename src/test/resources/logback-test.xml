@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <logger name="org.springframework" level="OFF"/>
-<!--    <logger name="log4j.logger.org.junit" level="OFF"/>-->
-<!--    <logger name="org.junit" level="OFF"/>-->
+    <!--    <logger name="log4j.logger.org.junit" level="OFF"/>-->
+    <!--    <logger name="org.junit" level="OFF"/>-->
     <!-- Turn on debug logging for all loggers under com.elsevier -->
-    <logger name="com.elsevier" level="DEBUG" />
+    <logger name="com.elsevier" level="DEBUG"/>
 </configuration>

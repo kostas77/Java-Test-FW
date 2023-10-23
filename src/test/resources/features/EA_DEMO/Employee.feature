@@ -2,7 +2,11 @@ Feature: Employee
   Responsible for verifying Benefits, Create Employee,
   Delete employee and check if the functionality works
 
-  @employee @regression
+  @local_test
+  Scenario: Test CBT/BS local connection
+    When I visit a page that displays my IP
+
+  @employee @regression @new
   Scenario: Create Employee with all details (part1)
     And I ensure application opened
     Then I click login link
@@ -16,7 +20,7 @@ Feature: Employee
       | Name      | Salary | DurationWorked | Grade | Email           |
       | AutoUser  | 4000   | 30             | 1     | autouser@ea.com |
       | AutoUser2 | 5000   | 40             | 1     | autouser@ea.com |
-  And I click create button
+    And I click create button
 
   @employee @regression
   Scenario: Create Employee with all details (part2)
