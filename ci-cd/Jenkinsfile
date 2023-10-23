@@ -122,6 +122,9 @@ pipeline {
 
         stage('Docker Lighthouse CI') {
             steps {
+                // Check Docker version
+                sh 'docker --version'
+
                 // Pull the Lighthouse CI Docker image
                 script {
                     docker.image(LIGHTHOUSE_IMAGE).pull()
@@ -141,6 +144,7 @@ pipeline {
                 // e.g., upload results to Lighthouse CI server or display in Jenkins
             }
         }
+
     }
 
     post {
