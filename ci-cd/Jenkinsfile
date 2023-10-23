@@ -13,6 +13,7 @@ pipeline {
         DOCKER_BUILDKIT          = 1
         // DOCKER_CREDENTIALS = 'docker-hub-credentials'
         // DOCKER_IMAGE = 'myusername/myimage'
+        LIGHTHOUSE_IMAGE = 'patrickhulce/lhci-client:latest'
     }
 
     options {
@@ -103,27 +104,49 @@ pipeline {
 //            }
 //        }
 
-        stage('Smoke E2E Test') {
+
+//        stage('Smoke E2E Test') {
+//            steps {
+//                script {
+////                    def service   = 'e2e'
+//                    echo 'Building...'
+//                    // docker.build([service])
+//
+//                    echo 'Running Smoke E2E Tests...'
+//                    // docker.test(
+//                    //     [(service): [test_command: 'yarn resolve-secrets:local && yarn build && xvfb-run --auto-servernum yarn workspace e2e run:smoke-tests']]
+//                    // )
+//                }
+//            }
+//        }
+
+        stage('Docker Lighthouse CI') {
             steps {
+                // Pull the Lighthouse CI Docker image
                 script {
-//                    def service   = 'e2e'
-                    echo 'Building...'
-                    // docker.build([service])
-
-                    echo 'Running Smoke E2E Tests...'
-                    // docker.test(
-                    //     [(service): [test_command: 'yarn resolve-secrets:local && yarn build && xvfb-run --auto-servernum yarn workspace e2e run:smoke-tests']]
-                    // )
+                    docker.image(LIGHTHOUSE_IMAGE).pull()
                 }
-            }
-        }
 
+                // Run Lighthouse CI using Docker
+                script {
+                    def lighthouseContainer = docker.image(LIGHTHOUSE_IMAGE).run("--entrypoint=''")
+                    lighthouseContainer.inside {
+                        sh """
+                            lhci autorun 
+                        """
+                    }
+                }
+
+                // Optional: Store the results or perform further actions
+                // e.g., upload results to Lighthouse CI server or display in Jenkins
+            }
 
     }
 
-//    post {
-//        always {
-//            sh("git clean -dfx")
-//        }
-//    }
+    post {
+        always {
+            sh("git clean -dfx")
+        }
+    }
+
 }
