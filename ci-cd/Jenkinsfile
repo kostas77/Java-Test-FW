@@ -140,7 +140,7 @@ pipeline {
                 // Optional: Store the results or perform further actions
                 // e.g., upload results to Lighthouse CI server or display in Jenkins
             }
-
+        }
     }
 
     post {
