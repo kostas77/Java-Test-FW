@@ -21,7 +21,7 @@ pipeline {
         disableConcurrentBuilds()
         timeout(time: 100, unit: 'MINUTES')
         timestamps()
-        ansiColor('xterm')
+//        ansiColor('xterm')
     }
 
     tools {
@@ -108,7 +108,7 @@ pipeline {
         stage('Smoke E2E Test') {
             steps {
                 script {
-                    def service   = 'e2e'
+//                    def service   = 'e2e'
                     echo 'Building...'
                     // docker.build([service])
 
