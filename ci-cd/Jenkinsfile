@@ -5,12 +5,12 @@ pipeline {
     environment {
         build_stamp = new Date().format("yyyyMMdd-HHmmss")
         ci_env = "${BRANCH_NAME}"
-        region = "eu-west-1"
+//        region = "eu-west-1"
         // GH_TOKEN = credentials('lhci-github-token')
-        ARTIFACTORY_URL          = 'docker-ecom-ecomplatform-local.bts.artifactory.tio.systems'
+//        ARTIFACTORY_URL          = 'docker-ecom-ecomplatform-local.bts.artifactory.tio.systems'
 //        PIPELINE_ID              = getPipelineID()
-        COMPOSE_DOCKER_CLI_BUILD = 1
-        DOCKER_BUILDKIT          = 1
+//        COMPOSE_DOCKER_CLI_BUILD = 1
+//        DOCKER_BUILDKIT          = 1
         // DOCKER_CREDENTIALS = 'docker-hub-credentials'
         // DOCKER_IMAGE = 'myusername/myimage'
         LIGHTHOUSE_IMAGE = 'patrickhulce/lhci-client:latest'
@@ -30,14 +30,14 @@ pipeline {
 
     stages {
 
-        stage('Docker setup') {
-            steps {
-                script {
-                    echo 'Docker setup...'
-//                    docker.login()
-                }
-            }
-        }
+//        stage('Docker setup') {
+//            steps {
+//                script {
+//                    echo 'Docker setup...'
+////                    docker.login()
+//                }
+//            }
+//        }
 
 //        stage('SonarQube scan') {
 //            steps {
