@@ -25,7 +25,7 @@ pipeline {
 
     tools {
         nodejs 'NodeJS_16'
-        docker 'docker'
+        dockerTool 'docker'
     }
 
     stages {
