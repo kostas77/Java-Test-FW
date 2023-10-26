@@ -65,6 +65,9 @@ pipeline {
         stage('Setup Google Chrome') {
             steps {
                 script {
+                    // Set the PATH to include Homebrew
+                    env.PATH = "/opt/homebrew/bin/brew:${env.PATH}"
+
                     // Install Liberation Fonts using Homebrew
                     sh '''
                         brew tap homebrew/cask-fonts
