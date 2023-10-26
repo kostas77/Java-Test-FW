@@ -66,7 +66,7 @@ pipeline {
             steps {
                 script {
                     // Set the PATH to include Homebrew
-                    env.PATH = "/opt/homebrew/bin/brew:${env.PATH}"
+                    env.PATH = "/opt/homebrew/bin:${env.PATH}"
 
                     // Install Liberation Fonts using Homebrew
                     sh '''
