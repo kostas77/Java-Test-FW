@@ -62,23 +62,23 @@ pipeline {
 //            }
 //        }
 
-        stage('Setup Google Chrome') {
-            steps {
-                script {
-                    // Set the PATH to include Homebrew
-                    env.PATH = "/opt/homebrew/bin:${env.PATH}"
-
-                    // Install Liberation Fonts using Homebrew
-                    sh '''
-                        brew tap homebrew/cask-fonts
-                        brew install --cask font-liberation
-                    '''
-
-                    // Install Google Chrome using Homebrew
-                    sh 'brew install --cask google-chrome'
-                }
-            }
-        }
+//        stage('Setup Google Chrome') {
+//            steps {
+//                script {
+//                    // Set the PATH to include Homebrew
+//                    env.PATH = "/opt/homebrew/bin:${env.PATH}"
+//
+//                    // Install Liberation Fonts using Homebrew
+//                    sh '''
+//                        brew tap homebrew/cask-fonts
+//                        brew install --cask font-liberation
+//                    '''
+//
+//                    // Install Google Chrome using Homebrew
+//                    sh 'brew install --cask google-chrome'
+//                }
+//            }
+//        }
 
 
         stage('Lighthouse CI scan') {
