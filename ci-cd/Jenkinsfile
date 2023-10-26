@@ -65,14 +65,18 @@ pipeline {
         stage('Setup Google Chrome') {
             steps {
                 script {
-                    sh 'yum install -y liberation-fonts'
+                    // Install Liberation Fonts using Homebrew
                     sh '''
-                        wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-                        yum localinstall -y ./google-chrome-stable_current_x86_64.rpm
+                        brew tap homebrew/cask-fonts
+                        brew install --cask font-liberation
                     '''
+
+                    // Install Google Chrome using Homebrew
+                    sh 'brew install --cask google-chrome'
                 }
             }
         }
+
 
         stage('Lighthouse CI scan') {
             steps {
