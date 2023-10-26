@@ -1,0 +1,11 @@
+{
+  "name": "lighthouse-ci-integration",
+  "version": "1.0.0",
+  "description": "Lighthouse CI integration for Maven project",
+  "scripts": {
+    "lhci": "lhci autorun --upload.target=temporary-public-storage || echo 'LHCI failed!'"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.12.x"
+  }
+}

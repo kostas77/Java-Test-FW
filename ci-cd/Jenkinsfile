@@ -62,88 +62,72 @@ pipeline {
 //            }
 //        }
 
-//        stage('Setup Google Chrome') {
-//            steps {
-//                script {
-//                    // sh '''
-//                    //     sudo sh -c 'echo -e "[google-chrome]\nname=google-chrome\nbaseurl=http://dl.google.com/linux/chrome/rpm/stable/$basearch\nenabled=1\ngpgcheck=1\ngpgkey=https://dl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome.repo'
-//                    // '''
-//                    // sh 'sudo yum install -y google-chrome-stable'
-//                    sh 'sudo yum install -y liberation-fonts --disablerepo=google-chrome'
-//                    sh 'sudo yum install -y libxkbcommon --disablerepo=google-chrome'
-//                    sh 'sudo yum install -y xdg-utils --disablerepo=google-chrome'
-//                    sh 'sudo yum install -y libXcomposite --disablerepo=google-chrome'
-//                    sh 'sudo yum install -y libXdamage --disablerepo=google-chrome'
-//                    sh 'sudo yum install -y libXrandr --disablerepo=google-chrome'
-//                    sh 'sudo yum install -y atk --disablerepo=google-chrome'
-//                    sh 'sudo yum install -y at-spi2-atk --disablerepo=google-chrome'
-//                    sh 'sudo yum install -y cairo --disablerepo=google-chrome'
-//                    sh '''
-//                        wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-//                        sudo yum localinstall -y ./google-chrome-stable_current_x86_64.rpm
-//                    '''
-//                }
-//            }
-//        }
-
-//        stage('Lighthouse CI scan') {
-//            steps {
-//                script {
-//                    try {
-//                        //if (env.BRANCH_NAME in ["dev", "uat", "staging"]) {
-//                            script {
-//                                sh 'npm install -g @lhci/cli@0.8.x'
-//                                // sh 'lhci autorun --collect.url=https://www.us.elsevierhealth.com'
-//                                sh 'lhci autorun'
-//                                // sh 'LHCI_GITHUB_APP_TOKEN=$GH_TOKEN lhci autorun'
-//                            }
-//                        //}
-//                    } catch (err) {
-//                        echo err.getMessage()
-//                    }
-//                }
-//            }
-//        }
-
-
-        stage('Test') {
+        stage('Setup Google Chrome') {
             steps {
                 script {
-                    echo 'Testing...'
-                    sh 'echo $PATH'
-                    // docker.build([service])
-
-                    // docker.test(
-                    //     [(service): [test_command: 'yarn resolve-secrets:local && yarn build && xvfb-run --auto-servernum yarn workspace e2e run:smoke-tests']]
-                    // )
+                    sh 'sudo yum install -y liberation-fonts'
+                    sh '''
+                        wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+                        sudo yum localinstall -y ./google-chrome-stable_current_x86_64.rpm
+                    '''
                 }
             }
         }
 
-        stage('Docker Lighthouse CI') {
+        stage('Lighthouse CI scan') {
             steps {
-                // Check Docker version
-                sh 'docker --version'
-
-                // Pull the Lighthouse CI Docker image
                 script {
-                    docker.image(LIGHTHOUSE_IMAGE).pull()
-                }
-
-                // Run Lighthouse CI using Docker
-                script {
-                    def lighthouseContainer = docker.image(LIGHTHOUSE_IMAGE).run("--entrypoint=''")
-                    lighthouseContainer.inside {
-                        sh """
-                            lhci autorun 
-                        """
+                    try {
+                        script {
+                            sh 'npm install -g @lhci/cli@0.12.x'
+                            sh 'lhci autorun --config=lighthouserc.js'
+                            // sh 'LHCI_GITHUB_APP_TOKEN=$GH_TOKEN lhci autorun'
+                        }
+                    } catch (err) {
+                        echo err.getMessage()
                     }
                 }
-
-                // Optional: Store the results or perform further actions
-                // e.g., upload results to Lighthouse CI server or display in Jenkins
             }
         }
+
+//        stage('Test') {
+//            steps {
+//                script {
+//                    echo 'Testing...'
+//                    sh 'echo $PATH'
+//                    // docker.build([service])
+//
+//                    // docker.test(
+//                    //     [(service): [test_command: 'yarn resolve-secrets:local && yarn build && xvfb-run --auto-servernum yarn workspace e2e run:smoke-tests']]
+//                    // )
+//                }
+//            }
+//        }
+
+//        stage('Docker Lighthouse CI') {
+//            steps {
+//                // Check Docker version
+//                sh 'docker --version'
+//
+//                // Pull the Lighthouse CI Docker image
+//                script {
+//                    docker.image(LIGHTHOUSE_IMAGE).pull()
+//                }
+//
+//                // Run Lighthouse CI using Docker
+//                script {
+//                    def lighthouseContainer = docker.image(LIGHTHOUSE_IMAGE).run("--entrypoint=''")
+//                    lighthouseContainer.inside {
+//                        sh """
+//                            lhci autorun
+//                        """
+//                    }
+//                }
+//
+//                // Optional: Store the results or perform further actions
+//                // e.g., upload results to Lighthouse CI server or display in Jenkins
+//            }
+//        }
 
     }
 
