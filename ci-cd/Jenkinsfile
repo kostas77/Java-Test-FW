@@ -14,7 +14,7 @@ pipeline {
         // DOCKER_CREDENTIALS = 'docker-hub-credentials'
         // DOCKER_IMAGE = 'myusername/myimage'
         LIGHTHOUSE_IMAGE = 'patrickhulce/lhci-client:latest'
-        LHCI_BUILD_CONTEXT__CURRENT_BRANCH = 'master'                  }
+        LHCI_BUILD_CONTEXT__CURRENT_BRANCH = 'master'
     }
 
     options {
@@ -144,5 +144,4 @@ pipeline {
             sh("git clean -dfx")
         }
     }
-
 }
