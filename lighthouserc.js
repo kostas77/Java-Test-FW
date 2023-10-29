@@ -1,7 +1,11 @@
 module.exports = {
     ci: {
         collect: {
-            url: ['https://www.us.elsevierhealth.com'],
+            url: ['https://www.us.elsevierhealth.com',
+                  'https://www.elsevierhealth.com.au/',
+                  'https://www.elsevier-masson.fr/',
+                  'https://shop.elsevier.de/',
+            ],
             numberOfRuns: 3,
         },
         // upload: {
