@@ -14,7 +14,8 @@ pipeline {
         // DOCKER_CREDENTIALS = 'docker-hub-credentials'
         // DOCKER_IMAGE = 'myusername/myimage'
         LIGHTHOUSE_IMAGE = 'patrickhulce/lhci-client:latest'
-    }
+        LHCI_BUILD_CONTEXT__CURRENT_BRANCH = 'master'                  }
+}
 
     options {
         disableConcurrentBuilds()
@@ -89,7 +90,6 @@ pipeline {
                             sh 'npm install -g @lhci/cli@0.12.x'
                             sh 'lhci autorun --config=lighthouserc.js'
                             // sh 'LHCI_GITHUB_APP_TOKEN=$GH_TOKEN lhci autorun'
-                        }
                     } catch (err) {
                         echo err.getMessage()
                     }
