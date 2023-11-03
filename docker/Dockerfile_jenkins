@@ -1,0 +1,39 @@
+# Start from the Jenkins base image
+FROM jenkins/jenkins:lts
+
+# Switch to root to install packages and make system changes
+USER root
+
+# Install SSH client
+RUN apt-get update && apt-get install -y openssh-client
+
+# Create SSH directory and set appropriate permissions
+RUN mkdir /var/jenkins_home/.ssh/ && \
+    chown jenkins:jenkins /var/jenkins_home/.ssh/ && \
+    chmod 700 /var/jenkins_home/.ssh/
+
+# Switch back to the jenkins user
+USER jenkins
+
+# Copy the pre-generated SSH key files into the container
+COPY id_ed25519 /var/jenkins_home/.ssh/id_ed25519
+COPY id_ed25519.pub /var/jenkins_home/.ssh/id_ed25519.pub
+
+# Set the correct permissions for the SSH keys
+RUN chmod 600 /var/jenkins_home/.ssh/id_ed25519 && \
+    chmod 644 /var/jenkins_home/.ssh/id_ed25519.pub
+
+# Add GitHub's host key to known_hosts
+# Note: You should replace `github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...` with the actual host key.
+RUN ssh-keyscan -t ed25519 github.com > /var/jenkins_home/.ssh/known_hosts
+
+# Alternatively, disable strict host key checking (not recommended)
+# RUN echo "Host github.com\n\tStrictHostKeyChecking no\n" > /var/jenkins_home/.ssh/config
+
+# Expose the default Jenkins port
+EXPOSE 8080
+
+# Expose the default Jenkins JNLP agent port
+EXPOSE 50000
+
+
