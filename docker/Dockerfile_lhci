@@ -1,4 +1,15 @@
-FROM ubuntu:latest
-LABEL authors="kostastseronis"
+# Start from the LHCI server image
+FROM patrickhulce/lhci-server
 
-ENTRYPOINT ["top", "-b"]
+# Set the working directory in the container
+WORKDIR /usr/src/lhci
+
+# Copy the Lighthouse CI configuration file into the container
+# This requires a lighthouserc.json in the same path as the Dockerfile
+COPY lighthouserc.json ./
+
+# Expose the port the LHCI server will run on
+EXPOSE 9001
+
+## Start the Lighthouse CI server using the copied config
+#CMD ["lhci", "server", "--config=/usr/src/lhci/lighthouserc.json"]

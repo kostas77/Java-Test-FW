@@ -1,0 +1,15 @@
+{
+    "ci": {
+        "server": {
+            "storage": {
+                "storageMethod": "sql",
+                "sqlDialect": "mysql",
+                "sqlHost": "lighhouse-ci-server-db.csruajwvvrrw.eu-west-1.rds.amazonaws.com",
+                "sqlDatabase": "lhci",
+                "sqlUsername": "admin",
+                "sqlPassword": "K0$tas77",
+                "sqlConnectionUrl": "mysql://admin:K0$tas77@lighhouse-ci-server-db.csruajwvvrrw.eu-west-1.rds.amazonaws.com/lhci"
+            }
+        }
+    }
+}
